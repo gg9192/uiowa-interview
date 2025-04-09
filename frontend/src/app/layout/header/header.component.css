@@ -10,3 +10,22 @@
   align-items: center;
   border-bottom: 3px solid #FFD200;
 }
+
+.logo a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #FFD200; 
+  text-decoration: none;
+}
+
+.nav-links a {
+  margin-left: 1.5rem;
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #FFD200; 
+}
