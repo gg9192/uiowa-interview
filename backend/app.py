@@ -3,6 +3,7 @@ import sqlalchemy
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from backend.models import request
 
 app = Flask(__name__)
 
