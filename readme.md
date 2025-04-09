@@ -6,12 +6,17 @@ Actual:
 2. Reasons for choosing your tech stack for this task. You can write a short paragraph to justify
 your choice among other alternatives.
 Frontend: angular, that is what the job uses, and I have experiance in using it.
+Component library: material, I have experiance with this and it's clean/easy to use
 Backend: Flask, simple and lightweight thing that I have experiance using. I don't have C#/.NET on my computer.
 DB: sqlite, simple lightweight relational DB that comes with my mac. 
 
 3. discussion
 Assumptions
+- only uploading and viewing requests are in scope
+- no authentication, or other similar fancy features
 
 Problems
+- UX design: outsource to GENAI
+
 
 Highlights

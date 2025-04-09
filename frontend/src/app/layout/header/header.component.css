@@ -28,4 +28,5 @@
 .nav-links a:hover,
 .nav-links a.active {
   color: #FFD200; 
+  cursor: pointer
 }
