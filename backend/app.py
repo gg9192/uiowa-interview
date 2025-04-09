@@ -29,6 +29,9 @@ def upload_receipt():
     if file.filename == '':
         return jsonify({"error": "No selected file"}), 400
     
+    if not file.filename.split('.')[-1] in ['png', 'jpeg', 'jpg']:
+        return jsonify({"error": "Selected file was not an image format"}), 400
+    
     form_data = request.form
     first_name = form_data.get('firstName', None)
     last_name = form_data.get('lastName', None)

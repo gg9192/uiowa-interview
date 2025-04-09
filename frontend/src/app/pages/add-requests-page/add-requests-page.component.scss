@@ -1,0 +1,17 @@
+@use '@angular/material' as mat;
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+.button {
+  @include mat.button-overrides((
+    filled-container-color: #FFD200,
+    filled-label-text-color: #000000,
+  ));
+}
+
+
+.uploadform {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
