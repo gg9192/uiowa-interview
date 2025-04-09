@@ -1,0 +1,33 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #000000;
+  padding: 1rem 2rem;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid #FFD200;
+}
+
+  
+  .logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #FFD200; /* UIowa Gold */
+    text-decoration: none;
+  }
+  
+  .nav-links a {
+    margin-left: 1.5rem;
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: #FFD200; /* Highlight with UIowa Gold */
+  }
+  

@@ -1,0 +1,9 @@
+.footer {
+  margin-top: auto; /* Push to bottom */
+  background-color: #000000;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  border-top: 3px solid #FFD200;
+}
