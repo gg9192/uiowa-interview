@@ -14,6 +14,7 @@ DB: sqlite, simple lightweight relational DB that comes with my mac.
 Assumptions
 - only uploading and viewing requests are in scope
 - no authentication, or other similar fancy features
+- injectable services not tested, as that is a API call without any logic
 
 Problems
 - UX design: outsource to GENAI
