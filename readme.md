@@ -21,3 +21,12 @@ Problems
 
 
 Highlights
+
+
+
+How to run: 
+go to backend directory, "pip3 install -r requirements.txt"
+"flask db upgrade" to create the database. make sure you have sqlite
+"flask run"
+
+in a new terminal, naviagate to the frontend and do "ng serve"
