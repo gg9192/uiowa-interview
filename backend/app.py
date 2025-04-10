@@ -1,10 +1,14 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import sqlalchemy
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from backend.models import request
 from backend.utils.form_validators import is_valid_usd, parse_and_return_date
+import uuid
+from backend.models import ProcurementRequest
+from backend.extensions import db  # Import db from extensions
+from datetime import datetime
+
 
 app = Flask(__name__)
 
@@ -13,16 +17,16 @@ DATADIR = os.path.join(os.path.dirname(__file__), 'data')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'  
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)  # This line sets up Flask-Migrate
+db.init_app(app)
+migrate = Migrate(app, db)  # Set up Flask-Migrate
 
-@app.route("/getImage/<id>", methods=['GET'])
+@app.route("/api/getImage/<id>", methods=['GET'])
 def get_image(id):
     pass
 
-@app.route("/upload", methods=['POST'])
+@app.route("/api/upload", methods=['POST'])
 def upload_receipt():
-    if 'file' not in request.files:
+    if not request.files:
         return jsonify({"error": "No file part in the request"}), 400
     
     file = request.files['file']
@@ -40,20 +44,38 @@ def upload_receipt():
     description = form_data.get('description', None)
     amount = form_data.get('amount', None)
 
+    print(first_name, last_name, purchase_date, description, amount)
     if not all([first_name, last_name, purchase_date, description, amount]):
         return jsonify({"error": "Missing required form data"}), 400
     
     if not is_valid_usd(amount):
         return jsonify({"error": "Currency is not valid"}), 400
+
+    filename = f"{uuid.uuid4()}.{file.filename.split('.')[-1]}"
+
+    filepath = os.path.join(DATADIR, filename)
+    file.save(filepath)
     
-    print(form_data, file)
+    new_receipt = ProcurementRequest(
+        first_name = first_name,
+        last_name = last_name,
+        description = description,
+        file_path = filepath,
+        date_of_purchase = purchase_date,
+        amount = amount
+    )
+
+    db.session.add(new_receipt)
+    db.session.commit()
+    
+    return jsonify({"message": "Receipt uploaded successfully", "image_url": filepath}), 200
     
 
-@app.route("/getReceipt/<id>", methods=['GET'])
+@app.route("/api/getReceipt/<id>", methods=['GET'])
 def get_receipt(id):
     pass
 
-@app.route('/getPaginated/requests/<pageno>', methods=['GET'])
+@app.route('/api/getPaginated/requests/<pageno>', methods=['GET'])
 def get_paginated_requests(pageno):
     pass
 

@@ -4,8 +4,8 @@ import re
 
 def parse_and_return_date(date_str):
     try:
-        datetime.strptime(date_str, "%m/%d/%Y")
-        return datetime
+        time = datetime.strptime(date_str, "%m/%d/%Y")
+        return time
     except ValueError:
         return None
     

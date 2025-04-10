@@ -33,7 +33,6 @@ export class AddRequestsPageComponent {
   amount = new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)])
   description = new FormControl('', [Validators.required])
   matcher = new GenericFormErrorStateMatcher()
-  private file: File | null = null
 
   @ViewChild('fileupload') fileUpload!: FileUploadComponent
 
@@ -61,7 +60,8 @@ export class AddRequestsPageComponent {
       lastName: this.lastname.value,
       amount: this.amount.value,
       purchaseDate: formatDate(this.purchasedate.value!),
-      file: this.file! //for sure not null
+      description: this.description.value,
+      file: this.fileUpload.file! //for sure not null
     }
 
     this.uploadService.createRequest(data).subscribe({

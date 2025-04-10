@@ -1,6 +1,6 @@
-from backend.app import db 
+from backend.extensions import db 
 
-class Request(db.Model):  
+class ProcurementRequest(db.Model):  
     __tablename__ = 'requests' 
     
     id = db.Column(db.Integer, primary_key=True)

@@ -1,8 +1,8 @@
-"""add requests
+"""added autoinc
 
-Revision ID: 96fc0e8c5f59
+Revision ID: 1c89ed0c77b7
 Revises: 
-Create Date: 2025-04-09 17:26:40.647519
+Create Date: 2025-04-10 13:53:36.411333
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '96fc0e8c5f59'
+revision = '1c89ed0c77b7'
 down_revision = None
 branch_labels = None
 depends_on = None

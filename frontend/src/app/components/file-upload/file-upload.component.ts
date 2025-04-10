@@ -14,8 +14,7 @@ import { MatError } from '@angular/material/input';
   styleUrl: './file-upload.component.css'
 })
 export class FileUploadComponent {
-  @Output() filesSelected = new EventEmitter<File>();
-
+  file: File | null = null
   fileName = '';
   isHovering = false;
   isEmpty = false;
@@ -58,6 +57,7 @@ export class FileUploadComponent {
   }
 
   private handleFiles(files: File[]) {
+    this.file = null;
     if (files.length === 0) {
       return
     }
@@ -72,7 +72,7 @@ export class FileUploadComponent {
       return
     }
     this.fileName = files[0].name;
-    this.filesSelected.emit(files[0]);
+    this.file = files[0]
     this.snackBar.open(`${files.length} file(s) selected`, 'Close', {
       duration: 3000
     });

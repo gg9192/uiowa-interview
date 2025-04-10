@@ -7,6 +7,7 @@ interface postdata {
   lastName: string | null,
   amount: string | null,
   purchaseDate: string | null,
+  description: string | null,
   file: File
 }
 
@@ -24,8 +25,9 @@ export class AddRequestServiceService {
     formData.append('lastName', data.lastName || '');
     formData.append('amount', data.amount || '');
     formData.append('purchaseDate', data.purchaseDate || '');
+    formData.append('description', data.description || '');
     formData.append('file', data.file); 
-    return this.http.post("http://localhost:3000/upload", data);
+    return this.http.post("http://localhost:4200/api/upload", formData);
   }
 
 }
