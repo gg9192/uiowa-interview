@@ -10,16 +10,18 @@
         <h3>Drag & Drop your file here</h3>
         <p>or</p>
         
-        <button mat-raised-button color="primary" (click)="fileInput.click()">
-          Browse Files
+        <!-- Button wrapper with hidden file input -->
+        <button mat-raised-button color="primary" type="button">
+          <label class="file-input-label">
+            Browse Files
+            <input #fileInput type="file" style="display: none" 
+                   (change)="onFileSelected($event)">
+          </label>
         </button>
-        
-        <input #fileInput type="file" style="display: none" 
-               (change)="onFileSelected($event)">
                
         <div *ngIf="fileName" class="file-info">
           <mat-icon>insert_drive_file</mat-icon>
-          <span>{{ fileName }}</span>
+          <span>{{ fileName }}</span>`
         </div>
       </div>
     </mat-card-content>

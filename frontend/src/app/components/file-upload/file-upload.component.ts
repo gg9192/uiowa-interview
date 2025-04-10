@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,6 +19,14 @@ export class FileUploadComponent {
   isHovering = false;
 
   constructor(private snackBar: MatSnackBar) {}
+
+  @ViewChild('fileinput') fileInput!: ElementRef<HTMLInputElement>;
+
+
+  triggerFileDialog() {
+    this.fileInput.nativeElement.click();
+  }
+  
 
   onDrop(event: DragEvent) {
     event.preventDefault();
