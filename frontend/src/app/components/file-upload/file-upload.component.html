@@ -26,7 +26,10 @@
       </div>
     </mat-card-content>
   </mat-card>
-  @if (isError) {
+  @if (isEmpty) {
     <mat-error>You must select a file to upload!</mat-error>
+  }
+  @if (isInvalid) {
+    <mat-error>You must valid image format!</mat-error>
   }
 </div>

@@ -11,6 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { FileUploadComponent } from '../../components/file-upload/file-upload.component';
 import { GenericFormErrorStateMatcher } from '../../utils/errorstatematcher';
 import { ViewChild } from '@angular/core';
+import { AddRequestServiceService } from '../../services/add-request-service';
+import formatDate from '../../utils/dateseralizer';
 
 
 
@@ -25,13 +27,15 @@ import { ViewChild } from '@angular/core';
 export class AddRequestsPageComponent {
   firstname = new FormControl('', [Validators.required])
   lastname = new FormControl('', [Validators.required])
-  purchasedate = new FormControl('', [Validators.required])
+  purchasedate = new FormControl<Date | null>(null, [Validators.required])
   amount = new FormControl('', [Validators.required])
   description = new FormControl('', [Validators.required])
   matcher = new GenericFormErrorStateMatcher()
+  private file: File | null = null
 
   @ViewChild('fileupload') fileUpload!: FileUploadComponent
 
+  constructor (private uploadService: AddRequestServiceService) {}
 
   submit() {
     const fileValid = this.fileUpload.isValid()
@@ -39,6 +43,21 @@ export class AddRequestsPageComponent {
     if (!fileValid) {
       return;
     }
+
+    if (! (this.firstname.valid && this.lastname.valid && this.amount.valid && this.purchasedate.valid && this.purchasedate.valid)) {
+      return;
+    }
+
+    const data = {
+      firstName: this.firstname.value,
+      lastName: this.lastname.value,
+      amount: this.amount.value,
+      purchaseDate: formatDate(this.purchasedate.value!),
+      file: this.file! //for sure not null
+    }
+
+
+    this.uploadService.createRequest(data)
 
   }
 

@@ -8,7 +8,7 @@ import { MatError } from '@angular/material/input';
 
 @Component({
   selector: 'app-file-upload',
-  standalone: true,  
+  standalone: true,
   imports: [MatCardModule, MatIconModule, CommonModule, MatButtonModule, MatError],
   templateUrl: './file-upload.component.html',
   styleUrl: './file-upload.component.css'
@@ -16,16 +16,20 @@ import { MatError } from '@angular/material/input';
 export class FileUploadComponent {
   @Output() filesSelected = new EventEmitter<File>();
 
-  isValid(): boolean {
-    this.isError = this.fileName === '' ? true : false;
-    return !this.isError
-  }
-  
   fileName = '';
   isHovering = false;
-  isError = false;
+  isEmpty = false;
+  isInvalid = false
 
-  constructor(private snackBar: MatSnackBar) {}
+  isValid(): boolean {
+    this.isEmpty = false;
+    this.isInvalid = false
+
+    this.isEmpty = this.fileName === '' ? true : false;
+
+    return !this.isEmpty
+  }
+  constructor(private snackBar: MatSnackBar) { }
 
   @ViewChild('fileinput') fileInput!: ElementRef<HTMLInputElement>;
 
@@ -33,12 +37,12 @@ export class FileUploadComponent {
   triggerFileDialog() {
     this.fileInput.nativeElement.click();
   }
-  
+
 
   onDrop(event: DragEvent) {
     event.preventDefault();
     this.isHovering = false;
-    
+
     if (event.dataTransfer?.files) {
       const files = Array.from(event.dataTransfer.files);
       this.handleFiles(files);
@@ -54,14 +58,26 @@ export class FileUploadComponent {
   }
 
   private handleFiles(files: File[]) {
-    if (files.length > 0) {
-      this.fileName = files[0].name;
-      this.filesSelected.emit(files[0]);
-      this.snackBar.open(`${files.length} file(s) selected`, 'Close', {
-        duration: 3000
-      });
-      this.isError = false
+    if (files.length === 0) {
+      return
     }
+
+    this.isEmpty = false;
+    this.isInvalid = false;
+
+    const fileExt = files[0]!.name!.split('.').at(-1)
+    console.log(fileExt)
+    if (!(['png', 'jpeg', 'jpg'].includes(fileExt!.toLowerCase()))) {
+      this.isInvalid = true;
+      this.fileName = ""
+      return
+    }
+    this.fileName = files[0].name;
+    this.filesSelected.emit(files[0]);
+    this.snackBar.open(`${files.length} file(s) selected`, 'Close', {
+      duration: 3000
+    });
+    this.isEmpty = false
   }
 
   onDragOver(event: DragEvent) {
