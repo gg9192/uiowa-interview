@@ -8,7 +8,7 @@ import {
   isPlatformServer,
   parseCookieValue,
   setRootDomAdapter
-} from "./chunk-Q2COSIAQ.js";
+} from "./chunk-JIP6LK6T.js";
 import {
   APP_BOOTSTRAP_LISTENER,
   APP_ID,
@@ -90,7 +90,7 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵinject
-} from "./chunk-ESYRB3CS.js";
+} from "./chunk-7YI3HTVZ.js";
 import {
   __async,
   __objRest,
@@ -4394,6 +4394,7 @@ function provideClientHydration(...features) {
 var VERSION = new Version("19.2.6");
 
 export {
+  HttpClient,
   EVENT_MANAGER_PLUGINS,
   EventManager,
   EventManagerPlugin,
@@ -4467,4 +4468,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-WSPPO2IH.js.map
+//# sourceMappingURL=chunk-UNS7TX5I.js.map

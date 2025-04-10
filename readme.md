@@ -14,11 +14,13 @@ DB: sqlite, simple lightweight relational DB that comes with my mac.
 Assumptions
 - only uploading and viewing requests are in scope
 - no authentication, or other similar fancy features
-- injectable services not tested, as that is a API call without any logic
+- testing is out of scope because it was not asked for. Yes testing is important in real world production systems,
+  this is just a toy example.
 
 Problems
 - UX design: outsource to GENAI
-
+- Material color theme, look at docs
+- db setup, read sqlalchemy docs
 
 Highlights
 

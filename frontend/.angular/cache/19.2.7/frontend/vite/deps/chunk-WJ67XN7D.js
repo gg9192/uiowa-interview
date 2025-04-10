@@ -1,18 +1,18 @@
 import {
   _CdkPrivateStyleLoader,
   _bindEventWithOptions
-} from "./chunk-JXDQFSZS.js";
+} from "./chunk-LR5ZH45Q.js";
 import {
   Platform,
   coerceElement,
   coerceNumberProperty
-} from "./chunk-OSHEVSMK.js";
+} from "./chunk-75UEIC2W.js";
 import {
   BidiModule
-} from "./chunk-3FKHPULN.js";
+} from "./chunk-7L7F54U6.js";
 import {
   DOCUMENT
-} from "./chunk-Q2COSIAQ.js";
+} from "./chunk-JIP6LK6T.js";
 import {
   APP_ID,
   BehaviorSubject,
@@ -61,7 +61,7 @@ import {
   ɵɵdefineInjectable,
   ɵɵdefineInjector,
   ɵɵdefineNgModule
-} from "./chunk-ESYRB3CS.js";
+} from "./chunk-7YI3HTVZ.js";
 import {
   __spreadValues
 } from "./chunk-EPAV4CNQ.js";
@@ -3135,6 +3135,7 @@ export {
   CdkMonitorFocus,
   _VisuallyHiddenLoader,
   coerceArray,
+  BreakpointObserver,
   ObserversModule,
   CdkTrapFocus,
   LiveAnnouncer,
@@ -3148,4 +3149,4 @@ export {
   MATERIAL_SANITY_CHECKS,
   MatCommonModule
 };
-//# sourceMappingURL=chunk-ZVKEMYT7.js.map
+//# sourceMappingURL=chunk-WJ67XN7D.js.map

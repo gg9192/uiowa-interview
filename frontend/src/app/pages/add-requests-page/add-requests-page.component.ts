@@ -8,13 +8,13 @@ import { MatPrefix } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
-
+import { FileUploadComponent } from '../../components/file-upload/file-upload.component';
 
 
 @Component({
   selector: 'app-add-requests-page',
   imports: [ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatCardModule, MatPrefix, 
-    MatDatepickerModule, MatButtonModule],
+    MatDatepickerModule, MatButtonModule, FileUploadComponent],
   providers: [provideNativeDateAdapter()],
   templateUrl: './add-requests-page.component.html',
   styleUrl: './add-requests-page.component.scss'
