@@ -28,7 +28,7 @@ export class AddRequestsPageComponent {
   firstname = new FormControl('', [Validators.required])
   lastname = new FormControl('', [Validators.required])
   purchasedate = new FormControl<Date | null>(null, [Validators.required])
-  amount = new FormControl('', [Validators.required])
+  amount = new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{2})?$/)])
   description = new FormControl('', [Validators.required])
   matcher = new GenericFormErrorStateMatcher()
   private file: File | null = null

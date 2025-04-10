@@ -12,7 +12,7 @@
     <mat-form-field>
       <mat-label>Last name</mat-label>
       <input matInput placeholder="Smith" [formControl]="lastname" [errorStateMatcher]="matcher">
-      @if (firstname.hasError('required')) {
+      @if (lastname.hasError('required')) {
       <mat-error>You must enter a last name</mat-error>
       }
     </mat-form-field>
@@ -23,9 +23,12 @@
       <input matInput type="number" class="example-right-align" placeholder="0" [errorStateMatcher]="matcher"
         [formControl]="amount" />
       <span matTextPrefix>$&nbsp;</span>
-      @if (firstname.hasError('required')) {
-      <mat-error>You must enter a last name</mat-error>
+      @if (amount.hasError('required')) {
+      <mat-error>You must enter an amount</mat-error>
       }
+      @if (amount.hasError('pattern')) {
+        <mat-error>You must enter a valid amount</mat-error>
+        }
     </mat-form-field>
 
 
