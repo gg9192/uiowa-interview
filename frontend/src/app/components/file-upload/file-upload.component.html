@@ -1,27 +1,27 @@
 <div class="file-upload-container">
-    <mat-card [class.file-over]="isHovering" 
-              (drop)="onDrop($event.dataTransfer!.files)"
-              (dragover)="toggleHover(true)"
-              (dragleave)="toggleHover(false)">
-      
-      <mat-card-content>
-        <div class="upload-area">
-          <mat-icon class="upload-icon">cloud_upload</mat-icon>
-          <h3>Drag & Drop your file here</h3>
-          <p>or</p>
-          
-          <button mat-raised-button color="primary" (click)="fileInput.click()">
-            Browse Files
-          </button>
-          
-          <input #fileInput type="file" style="display: none" 
-                 (change)="onFileSelected($event)">
-                 
-          <div *ngIf="fileName" class="file-info">
-            <mat-icon>insert_drive_file</mat-icon>
-            <span>{{ fileName }}</span>
-          </div>
+  <mat-card class="card"
+            [class.file-over]="isHovering" 
+            (drop)="onDrop($event)"
+            (dragover)="onDragOver($event)"
+            (dragleave)="onDragLeave($event)">
+    <mat-card-content>
+      <div class="upload-area">
+        <mat-icon class="upload-icon">cloud_upload</mat-icon>
+        <h3>Drag & Drop your file here</h3>
+        <p>or</p>
+        
+        <button mat-raised-button color="primary" (click)="fileInput.click()">
+          Browse Files
+        </button>
+        
+        <input #fileInput type="file" style="display: none" 
+               (change)="onFileSelected($event)">
+               
+        <div *ngIf="fileName" class="file-info">
+          <mat-icon>insert_drive_file</mat-icon>
+          <span>{{ fileName }}</span>
         </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
