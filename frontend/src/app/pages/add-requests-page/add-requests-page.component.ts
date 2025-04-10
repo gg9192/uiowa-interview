@@ -13,7 +13,9 @@ import { GenericFormErrorStateMatcher } from '../../utils/errorstatematcher';
 import { ViewChild } from '@angular/core';
 import { AddRequestServiceService } from '../../services/add-request-service';
 import formatDate from '../../utils/dateseralizer';
-
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ErrorHandlerService } from '../../services/error-handler-service';
 
 
 @Component({
@@ -35,11 +37,17 @@ export class AddRequestsPageComponent {
 
   @ViewChild('fileupload') fileUpload!: FileUploadComponent
 
-  constructor (private uploadService: AddRequestServiceService) {}
+  constructor (private uploadService: AddRequestServiceService, private router:Router, 
+    private snackbar: MatSnackBar, private errorHandler: ErrorHandlerService) {}
 
-  submit() {
+  onSubmit() {
+
+    [this.firstname, this.lastname, this.purchasedate, this.amount, this.description].forEach(ctrl => {
+      ctrl.markAsTouched();
+      ctrl.updateValueAndValidity();
+    });
+
     const fileValid = this.fileUpload.isValid()
-    console.log(this.purchasedate.value)
     if (!fileValid) {
       return;
     }
@@ -56,8 +64,17 @@ export class AddRequestsPageComponent {
       file: this.file! //for sure not null
     }
 
-
-    this.uploadService.createRequest(data)
+    this.uploadService.createRequest(data).subscribe({
+      next: () => {
+        this.snackbar.open('Created request successfully', '', {
+          duration: 3000
+        });
+        this.router.navigate(['/'])
+      },
+      error: (error) => {
+        this.errorHandler.handleError(error)
+      }
+    })
 
   }
 

@@ -66,7 +66,6 @@ export class FileUploadComponent {
     this.isInvalid = false;
 
     const fileExt = files[0]!.name!.split('.').at(-1)
-    console.log(fileExt)
     if (!(['png', 'jpeg', 'jpg'].includes(fileExt!.toLowerCase()))) {
       this.isInvalid = true;
       this.fileName = ""
