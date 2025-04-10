@@ -1,4 +1,4 @@
-<div class="file-upload-container">
+<div class="file-upload-container" >
   <mat-card class="card"
             [class.file-over]="isHovering" 
             (drop)="onDrop($event)"
@@ -7,7 +7,7 @@
     <mat-card-content>
       <div class="upload-area">
         <mat-icon class="upload-icon">cloud_upload</mat-icon>
-        <h3>Drag & Drop your file here</h3>
+        <h3>Drag & Drop your receipt here</h3>
         <p>or</p>
         
         <!-- Button wrapper with hidden file input -->
@@ -26,4 +26,7 @@
       </div>
     </mat-card-content>
   </mat-card>
+  @if (isError) {
+    <mat-error>You must select a file to upload!</mat-error>
+  }
 </div>

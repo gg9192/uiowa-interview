@@ -1,41 +1,58 @@
 <mat-card class="card">
-    <form class="uploadform">
-        <mat-form-field >
-            <mat-label>First name</mat-label>
-            <input matInput placeholder="John">
-        </mat-form-field>
+  <form class="uploadform">
+    <mat-form-field>
+      <mat-label>First name</mat-label>
+      <input matInput placeholder="John" [formControl]="firstname" [errorStateMatcher]="matcher">
+      @if (firstname.hasError('required')) {
+      <mat-error>You must enter a first name</mat-error>
+      }
+    </mat-form-field>
 
-        <mat-form-field >
-            <mat-label>Last name</mat-label>
-            <input matInput placeholder="Smith">
-        </mat-form-field>
-        
-        <mat-form-field>
-            <mat-label>Amount</mat-label>
-            <input matInput type="number" class="example-right-align" placeholder="0" />
-            <span matTextPrefix>$&nbsp;</span>
-          </mat-form-field>
 
-          <mat-form-field>
-            <mat-label>Purchase Date</mat-label>
-            <input matInput [matDatepicker]="picker">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
+    <mat-form-field>
+      <mat-label>Last name</mat-label>
+      <input matInput placeholder="Smith" [formControl]="lastname" [errorStateMatcher]="matcher">
+      @if (firstname.hasError('required')) {
+      <mat-error>You must enter a last name</mat-error>
+      }
+    </mat-form-field>
 
-          <mat-form-field>
-            <mat-label>Description</mat-label>
-            <textarea matInput
-                      cdkTextareaAutosize
-                      #autosize="cdkTextareaAutosize"
-                      cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="5"></textarea>
-          </mat-form-field>
 
-          <app-file-upload></app-file-upload>
+    <mat-form-field>
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" class="example-right-align" placeholder="0" [errorStateMatcher]="matcher"
+        [formControl]="amount" />
+      <span matTextPrefix>$&nbsp;</span>
+      @if (firstname.hasError('required')) {
+      <mat-error>You must enter a last name</mat-error>
+      }
+    </mat-form-field>
 
-          <button class="button" mat-flat-button>Submit</button>
 
-    </form>
+    <mat-form-field>
+      <mat-label>Purchase Date</mat-label>
+      <input matInput [matDatepicker]="picker" [errorStateMatcher]="matcher" [formControl]="purchasedate">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      @if (purchasedate.hasError('required')) {
+      <mat-error>You must enter a date</mat-error>
+      }
+      
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="5" [formControl]="description"></textarea>
+        @if (description.hasError('required')) {
+          <mat-error>You must enter a description</mat-error>
+          }
+    </mat-form-field>
+
+    <app-file-upload #fileupload></app-file-upload>
+
+    <button class="button" mat-flat-button (click)="submit()" type="button">Submit</button>
+
+  </form>
 </mat-card>

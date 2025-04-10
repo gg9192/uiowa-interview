@@ -4,19 +4,26 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { MatError } from '@angular/material/input';
 
 @Component({
   selector: 'app-file-upload',
   standalone: true,  
-  imports: [MatCardModule, MatIconModule, CommonModule, MatButtonModule],
+  imports: [MatCardModule, MatIconModule, CommonModule, MatButtonModule, MatError],
   templateUrl: './file-upload.component.html',
   styleUrl: './file-upload.component.css'
 })
 export class FileUploadComponent {
-  @Output() filesSelected = new EventEmitter<File[]>();
+  @Output() filesSelected = new EventEmitter<File>();
+
+  isValid(): boolean {
+    this.isError = this.fileName === '' ? true : false;
+    return !this.isError
+  }
   
   fileName = '';
   isHovering = false;
+  isError = false;
 
   constructor(private snackBar: MatSnackBar) {}
 
@@ -49,10 +56,11 @@ export class FileUploadComponent {
   private handleFiles(files: File[]) {
     if (files.length > 0) {
       this.fileName = files[0].name;
-      this.filesSelected.emit(files);
+      this.filesSelected.emit(files[0]);
       this.snackBar.open(`${files.length} file(s) selected`, 'Close', {
         duration: 3000
       });
+      this.isError = false
     }
   }
 
