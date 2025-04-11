@@ -1,7 +1,7 @@
 1. The numbers of the estimated hours and the actual hours. You can optionally write a short
 paragraph with details and explanations.
 Estimation: 5
-Actual: 
+Actual: 9
 
 2. Reasons for choosing your tech stack for this task. You can write a short paragraph to justify
 your choice among other alternatives.
@@ -21,8 +21,14 @@ Problems
 - UX design: outsource to GENAI
 - Material color theme, look at docs
 - db setup, read sqlalchemy docs
+- The file upload, took a bit of googling and debugging
 
 Highlights
+File storage on the backend
+Viewing said files
+Look at the code and the live demo
+Look at the code style
+Files should be drop-able onto the upload
 
 
 
