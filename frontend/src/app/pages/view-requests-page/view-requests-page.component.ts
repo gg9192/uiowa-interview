@@ -14,16 +14,12 @@ import { TableComponent } from '../../components/table/table.component';
   templateUrl: './view-requests-page.component.html',
   styleUrl: './view-requests-page.component.css'
 })
-export class ViewRequestsPage implements AfterViewInit, OnInit {
+export class ViewRequestsPage  {
   displayedColumns: string[] = ['firstName', 'lastName', 'dateOfPurchase', 'amount']
   dataSource = new MatTableDataSource<any>([]);
   pageno = 1
   totalElements = 0
   pagesize = 0
-
-  ngOnInit(): void {
-    this.refetch()
-  }
 
   onRowClick(element: any) {
     const id = element.id
@@ -34,31 +30,8 @@ export class ViewRequestsPage implements AfterViewInit, OnInit {
     private router: Router
   ) { }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-
-  refetch() {
-    this.fetchService.getPaginatedData(this.pageno).subscribe({
-      next: (data) => {
-        this.dataSource = new MatTableDataSource(data.items)
-        this.totalElements = data.totalItems
-      },
-      error: (error) => {
-        this.errorHandler.handleError(error)
-      }
-    })
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.paginator.page.pipe(
-      debounceTime(100), // Wait for 300ms after the last page change
-      distinctUntilChanged((prev, curr) => prev.pageIndex === curr.pageIndex && prev.pageSize === curr.pageSize) // Only emit if the page or page size has changed
-    ).subscribe((page) => {
-      this.pageno = page.pageIndex;
-      this.refetch();
-    });
-  }
+  
 
 
 }

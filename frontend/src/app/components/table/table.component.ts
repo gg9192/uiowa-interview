@@ -4,23 +4,24 @@ import { debounceTime } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs';
 import { ErrorHandlerService } from '../../services/error-handler-service';
 import { Router } from '@angular/router';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { ProcurementRequest } from '../../interfaces/response.interface';
 
 @Component({
   selector: 'app-table',
-  imports: [MatPaginator, MatTableModule],
+  imports: [MatPaginatorModule, MatTableModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })
-export class TableComponent implements OnInit, AfterViewInit {
+export class TableComponent implements AfterViewInit {
   displayedColumns: string[] = ['firstName', 'lastName', 'dateOfPurchase', 'amount']
   
-  dataSource: MatTableDataSource<ProcurementRequest> | null = null
+  dataSource: MatTableDataSource<ProcurementRequest> = new MatTableDataSource()
   totalElements = 0
   pagesize = 0
   pageno = 0
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor (private fetchService: RequestTableService, private errorHandler: ErrorHandlerService,private router: Router) {}
 
@@ -31,18 +32,11 @@ export class TableComponent implements OnInit, AfterViewInit {
 
 
 
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  ngOnInit() {
-    this.refetch()
-  }
-
   refetch() {
     this.fetchService.getPaginatedData(this.pageno).subscribe({
       next: (data) => {
         this.dataSource = new MatTableDataSource(data.items)
-        
+        this.totalElements = data.totalItems;
       },
       error: (error) => {
         this.errorHandler.handleError(error)
@@ -51,12 +45,14 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.refetch()
+
     this.paginator.page.pipe(
       debounceTime(100), // Wait for 300ms after the last page change
       distinctUntilChanged((prev, curr) => prev.pageIndex === curr.pageIndex && prev.pageSize === curr.pageSize) // Only emit if the page or page size has changed
     ).subscribe((page) => {
       this.pageno = page.pageIndex;
-      this.pagesize = page.pageSize;
+      this.refetch()
     });
   }
   }

@@ -90,12 +90,11 @@ def get_receipt(id):
 
 @app.route('/api/getPaginated/requests/', methods=['GET'])
 def get_paginated_requests():
-    page_no = request.args.get('pageno', default=1, type=int)
-
+    page_no = request.args.get('pageno', default=1, type=int) + 1
     per_page = 5
 
     paginated_requests = ProcurementRequest.query.order_by(desc(ProcurementRequest.date_of_purchase))\
-                                                   .paginate(page=page_no, per_page=per_page, error_out=False)
+                                                .paginate(page=page_no, per_page=per_page, error_out=False)
     
     results = []
     for r in paginated_requests.items:
