@@ -1,0 +1,21 @@
+@if (data === null) {}
+@else {
+@if (data === null) {}
+@else {
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>{{ data.firstName }} {{ data.lastName }}</mat-card-title>
+    <mat-card-subtitle>{{ data.dateOfPurchase | date: 'shortDate' }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content class="padding">
+    <p><strong>Description:</strong> {{ data.description }}</p>
+    <p><strong>Amount:</strong> {{ data.amount | currency }}</p>
+  </mat-card-content>
+  <img [src]="imageUrl" alt="Receipt Image" />
+
+
+
+</mat-card>
+}
+}

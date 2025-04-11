@@ -7,6 +7,8 @@ from backend.models import ProcurementRequest
 from backend.extensions import db  # Import db from extensions
 from sqlalchemy import desc
 from backend.utils.string_formatters import serialize_date
+from flask import send_file
+
 
 
 
@@ -22,7 +24,21 @@ migrate = Migrate(app, db)  # Set up Flask-Migrate
 
 @app.route("/api/getImage/<id>", methods=['GET'])
 def get_image(id):
-    pass
+    # Retrieve the procurement request by ID
+    receipt = ProcurementRequest.query.get(id)
+    
+    if not receipt:
+        return jsonify({"error": "Receipt not found"}), 404
+    
+    # Extract the file path from the receipt
+    file_path = os.path.join(DATADIR, receipt.file_path)
+    
+    # Check if the file exists on the server
+    if not os.path.exists(file_path):
+        return jsonify({"error": "Image file not found"}), 404
+    
+    # Send the image file to the client
+    return send_file(file_path)
 
 @app.route("/api/upload", methods=['POST'])
 def upload_receipt():
