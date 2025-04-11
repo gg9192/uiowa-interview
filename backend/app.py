@@ -1,13 +1,13 @@
 from flask import Flask, jsonify, request
-import sqlalchemy
 import os
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from backend.utils.form_validators import is_valid_usd, parse_and_return_date
 import uuid
 from backend.models import ProcurementRequest
 from backend.extensions import db  # Import db from extensions
-from datetime import datetime
+from sqlalchemy import desc
+from backend.utils.string_formatters import serialize_date
+
 
 
 app = Flask(__name__)
@@ -75,7 +75,30 @@ def upload_receipt():
 def get_receipt(id):
     pass
 
-@app.route('/api/getPaginated/requests/<pageno>', methods=['GET'])
-def get_paginated_requests(pageno):
-    pass
+@app.route('/api/getPaginated/requests/', methods=['GET'])
+def get_paginated_requests():
+    page_no = request.args.get('pageno', default=1, type=int)
+
+    per_page = 5
+
+    paginated_requests = ProcurementRequest.query.order_by(desc(ProcurementRequest.date_of_purchase))\
+                                                   .paginate(page=page_no, per_page=per_page, error_out=False)
+    
+    results = []
+    for r in paginated_requests.items:
+        results.append({
+            'id': r.id,
+            'firstName': r.first_name,
+            'lastName': r.last_name,
+            'description': r.description,
+            'filePath': r.file_path,
+            'dateOfPurchase': serialize_date(r.date_of_purchase),
+            'amount': r.amount
+        })
+
+    return jsonify({
+        'totalItems': paginated_requests.total,
+        'items': results
+    })
+
 

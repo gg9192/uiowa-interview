@@ -1,13 +1,9 @@
-export interface Request {
-    firstName: string,
-    lastName: string,
-    dateOfPurchase: Date,
-    amount: string,
-    description: string
-}
-
-export interface DisplayTableRequest {
-    name: string,
-    date: Date,
-    amount: string
-}
+export interface postdata {
+    firstName: string | null,
+    lastName: string | null,
+    amount: string | null,
+    purchaseDate: string | null,
+    description: string | null,
+    file: File
+  }
+  

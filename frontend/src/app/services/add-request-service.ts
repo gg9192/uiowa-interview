@@ -1,15 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { postdata } from '../interfaces/request.interface';
 
-
-interface postdata {
-  firstName: string | null,
-  lastName: string | null,
-  amount: string | null,
-  purchaseDate: string | null,
-  description: string | null,
-  file: File
-}
 
 @Injectable({
   providedIn: 'root'

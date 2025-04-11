@@ -1,0 +1,27 @@
+@use '@angular/material' as mat;
+
+.button {
+  @include mat.button-overrides((
+    filled-container-color: #FFD200,
+    filled-label-text-color: #000000,
+  ));
+}
+
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .error-card {
+    text-align: center;
+    width: 300px;
+  }
+
+  .center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
