@@ -73,7 +73,20 @@ def upload_receipt():
 
 @app.route("/api/getReceipt/<id>", methods=['GET'])
 def get_receipt(id):
-    pass
+    receipt = ProcurementRequest.query.get(id)
+    
+    if not receipt:
+        return jsonify({"error": "Receipt not found"}), 404
+    
+    # Return the receipt details in JSON format
+    return jsonify({
+        'id': receipt.id,
+        'firstName': receipt.first_name,
+        'lastName': receipt.last_name,
+        'description': receipt.description,
+        'dateOfPurchase': serialize_date(receipt.date_of_purchase),
+        'amount': receipt.amount
+    }), 200
 
 @app.route('/api/getPaginated/requests/', methods=['GET'])
 def get_paginated_requests():
@@ -91,7 +104,6 @@ def get_paginated_requests():
             'firstName': r.first_name,
             'lastName': r.last_name,
             'description': r.description,
-            'filePath': r.file_path,
             'dateOfPurchase': serialize_date(r.date_of_purchase),
             'amount': r.amount
         })

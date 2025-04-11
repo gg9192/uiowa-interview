@@ -6,7 +6,7 @@ import { ErrorHandlerService } from '../../services/error-handler-service';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
-import { ProcurementRequestTableItem } from '../../interfaces/response.interface';
+import { ProcurementRequest } from '../../interfaces/response.interface';
 
 @Component({
   selector: 'app-table',
@@ -17,7 +17,7 @@ import { ProcurementRequestTableItem } from '../../interfaces/response.interface
 export class TableComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['firstName', 'lastName', 'dateOfPurchase', 'amount']
   
-  dataSource: MatTableDataSource<ProcurementRequestTableItem> | null = null
+  dataSource: MatTableDataSource<ProcurementRequest> | null = null
   totalElements = 0
   pagesize = 0
   pageno = 0
@@ -42,7 +42,6 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.fetchService.getPaginatedData(this.pageno).subscribe({
       next: (data) => {
         this.dataSource = new MatTableDataSource(data.items)
-        console.log(data)
         
       },
       error: (error) => {
