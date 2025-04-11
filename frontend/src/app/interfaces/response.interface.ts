@@ -1,4 +1,4 @@
-interface ProcurementRequestTableItem {
+export interface ProcurementRequestTableItem {
     id: number,
     firstName: string,
     lastName: string,
@@ -8,7 +8,7 @@ interface ProcurementRequestTableItem {
     amount: string
 }
 
-export default interface PaginationRequest{
+export interface PaginationRequest{
     totalItems: number,
     items: ProcurementRequestTableItem[]
 }

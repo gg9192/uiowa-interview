@@ -1,47 +1,49 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { Component, ViewChild, Input, OnInit, AfterViewInit } from '@angular/core';
 import { RequestTableService } from '../../services/request-table-service';
 import { debounceTime } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs';
 import { ErrorHandlerService } from '../../services/error-handler-service';
 import { Router } from '@angular/router';
-import { TableComponent } from '../../components/table/table.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { ProcurementRequestTableItem } from '../../interfaces/response.interface';
 
 @Component({
-  selector: 'app-view-requests-page',
-  imports: [MatPaginatorModule, MatTableModule, TableComponent],
-  templateUrl: './view-requests-page.component.html',
-  styleUrl: './view-requests-page.component.css'
+  selector: 'app-table',
+  imports: [MatPaginator, MatTableModule],
+  templateUrl: './table.component.html',
+  styleUrl: './table.component.css'
 })
-export class ViewRequestsPage implements AfterViewInit, OnInit {
+export class TableComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['firstName', 'lastName', 'dateOfPurchase', 'amount']
-  dataSource = new MatTableDataSource<any>([]);
-  pageno = 1
+  
+  dataSource: MatTableDataSource<ProcurementRequestTableItem> | null = null
   totalElements = 0
   pagesize = 0
+  pageno = 0
 
-  ngOnInit(): void {
-    this.refetch()
-  }
+  constructor (private fetchService: RequestTableService, private errorHandler: ErrorHandlerService,private router: Router) {}
 
   onRowClick(element: any) {
     const id = element.id
     this.router.navigate([`/view/${id}`])
   }
 
-  constructor(private fetchService: RequestTableService, private errorHandler: ErrorHandlerService,
-    private router: Router
-  ) { }
+
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  ngOnInit() {
+    this.refetch()
+  }
 
   refetch() {
     this.fetchService.getPaginatedData(this.pageno).subscribe({
       next: (data) => {
         this.dataSource = new MatTableDataSource(data.items)
-        this.totalElements = data.totalItems
+        console.log(data)
+        
       },
       error: (error) => {
         this.errorHandler.handleError(error)
@@ -49,17 +51,17 @@ export class ViewRequestsPage implements AfterViewInit, OnInit {
     })
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+  ngAfterViewInit(): void {
     this.paginator.page.pipe(
       debounceTime(100), // Wait for 300ms after the last page change
       distinctUntilChanged((prev, curr) => prev.pageIndex === curr.pageIndex && prev.pageSize === curr.pageSize) // Only emit if the page or page size has changed
     ).subscribe((page) => {
       this.pageno = page.pageIndex;
-      this.refetch();
+      this.pagesize = page.pageSize;
     });
+  }
   }
 
 
-}
+
 
